@@ -1,10 +1,52 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+
+    <!--  Зависимости Bootstrap-->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script th:src="@{/bootstrap-5.3.3-dist/js/bootstrap.js}"></script>
+    <!--    Здесь я заменил bootstrap.min.css локальный на вариант CDN.
+            По сути можно использовать тот и другой вариант. Оба работают-->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://getbootstrap.com/docs/5.3/assets/css/docs.css" rel="stylesheet">
+
+    <!--    Верхняя ссылка почему-то не работает с аккордеонами.
+            Поэтому я полдня игрался с CDN и прочей фигней и случайно
+            решил проблему. Но теперь не работает кнопка с выпадающим
+            меню!-->
+    <script href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!--    Здесь я задал стиль для body и футера таким образом,
+            чтобы наш футер всегда был внизу, вне зависимости от того,
+            много контента на странице или мало-->
+    <style>
+        body {
+            min-height: 100vh;
+        }
+        footer {
+            position: sticky;
+            top: 100%;
+        }
+    </style>
+
     <title>Main</title>
 </head>
+<!--    Эта строка позволяет добавить иконку сайта. Главное, чтобы картинка была доступна-->
+<link rel="shortcut icon" th:href="@{/images/accident-logo.png}"/>
 <body>
-Hello, HTML!
+<div class="container-fluid p-0 mb-5">
+    <!--    С помощью тега <header> и атрибута insert мы вставляем общий компонент страницы (блок навигации, который мы вынесли отдельно)-->
+    <header th:insert="blocks/header :: header"></header>
+    <div class="container mt-2" style="font-size: 18px">
+        <br>
+        <p>There are basic references below to navigate around our micro web-site:</p>
+        <ul>
+            <li><a th:href="@{/index}">This is a root page. You're here</a></li>
+        </ul>
+    </div>
+</div>
 </body>
+<!--    Вызов Footer добавляется в конце HTML страницы -->
+<footer th:insert="blocks/footer :: footer"></footer>
 </html>

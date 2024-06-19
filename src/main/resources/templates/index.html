@@ -35,17 +35,39 @@
 <!--    Эта строка позволяет добавить иконку сайта. Главное, чтобы картинка была доступна-->
 <link rel="shortcut icon" th:href="@{/images/accident-logo.png}"/>
 <body>
-<div class="container-fluid p-0 mb-5">
-    <!--    С помощью тега <header> и атрибута insert мы вставляем общий компонент страницы (блок навигации, который мы вынесли отдельно)-->
-    <header th:insert="blocks/header :: header"></header>
-    <div class="container mt-2" style="font-size: 18px">
-        <br>
-        <p>There are basic references below to navigate around our micro web-site:</p>
-        <ul>
-            <li><a th:href="@{/index}">This is a root page. You're here</a></li>
-        </ul>
+    <div class="container-fluid p-0 mb-5">
+        <!--    С помощью тега <header> и атрибута insert мы вставляем общий компонент страницы (блок навигации, который мы вынесли отдельно)-->
+        <header th:insert="blocks/header :: header"></header>
+        <div class="mt-5 container" style="font-size: 18px">
+            <br>
+            <p>There are basic references below to navigate around our micro web-site:</p>
+            <ul>
+                <li><a th:href="@{/index}">This is a root page. You're here</a></li>
+            </ul>
+        </div>
     </div>
-</div>
+    <div class="col-10 container">
+        <div class="text-center">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Address</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="mb-5" th:each="accident : ${accidents}">
+                    <td th:text="${accident.id}"></td>
+                    <td th:text="${accident.name}"></td>
+                    <td th:text="${accident.text}"></td>
+                    <td th:text="${accident.address}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </body>
 <!--    Вызов Footer добавляется в конце HTML страницы -->
 <footer th:insert="blocks/footer :: footer"></footer>

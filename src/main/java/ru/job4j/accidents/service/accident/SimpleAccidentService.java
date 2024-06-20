@@ -36,4 +36,9 @@ public class SimpleAccidentService implements AccidentService {
     public void deleteById(int id) {
         accidentRepository.deleteById(id);
     }
+
+    @Override
+    public void update(Accident accident) {
+        accidentRepository.updateAccident(accident);
+    }
 }

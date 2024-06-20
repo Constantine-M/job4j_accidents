@@ -17,4 +17,6 @@ public interface AccidentRepository {
     Accident save(Accident accident);
 
     void deleteById(int id);
+
+    void updateAccident(Accident accident);
 }

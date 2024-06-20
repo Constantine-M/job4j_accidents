@@ -68,6 +68,14 @@ public class AccidentMem implements AccidentRepository {
     }
 
     /**
+     * Обновить инцидент.
+     */
+    @Override
+    public void updateAccident(Accident accident) {
+        accidents.put(accident.getId(), accident);
+    }
+
+    /**
      * Метод временно заполняет данными
      * нашу коллекцию, чтобы в представлении
      * было что показать.

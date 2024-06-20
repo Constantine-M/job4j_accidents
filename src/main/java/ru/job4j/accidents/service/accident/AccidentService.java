@@ -17,4 +17,6 @@ public interface AccidentService {
     Accident save(Accident accident);
 
     void deleteById(int id);
+
+    void update(Accident accident);
 }

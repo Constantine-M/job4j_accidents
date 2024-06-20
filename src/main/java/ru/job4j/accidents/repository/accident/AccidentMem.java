@@ -52,6 +52,7 @@ public class AccidentMem implements AccidentRepository {
      */
     @Override
     public Accident save(Accident accident) {
+        accident.setId(accidents.size() + 1);
         accidents.putIfAbsent(accident.getId(), accident);
         return accident;
     }

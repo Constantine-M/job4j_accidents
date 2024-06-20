@@ -3,7 +3,7 @@
 <div th:fragment="header" xmlns="http://www.w3.org/1999/html">
     <nav class="navbar navbar-expand navbar-light" style="background-color: #DAA2B0;">
         <div class="container" style="font-size: 14px">
-            <a class="navbar-brand" style="font-size: 22px" href="/">
+            <a class="navbar-brand" style="font-size: 22px" href="/index">
                 <!--Здесь мы использовали Tymeleaf для указания пути для картинки.
                     А также создали для картинок типа "лого" директорию "images" внутри "static".
                     И все получилось - картинка отображается на странице-->
@@ -18,8 +18,8 @@
                         не совсем понятно-->
                 <div class="navbar-nav mr-auto">
                     <div class="navbar-nav me-auto">
-                        <a class="nav-item nav-link" style="font-size: 18px" th:href="@{/index}">About us</a>
-                        <a class="nav-item nav-link" style="font-size: 18px" th:href="@{/}">Add</a>
+                        <a class="nav-item nav-link" style="font-size: 18px" th:href="@{/}">Accidents</a>
+                        <a class="nav-item nav-link" style="font-size: 18px" th:href="@{/saveAccident}">Create accident</a>
                     </div>
                 </div>
             </div>

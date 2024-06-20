@@ -14,3 +14,10 @@ spring:
     multipart:
       # Указываем максимальный размер файла (по умолчанию 1MB, что неудобно, т.к. некоторые изображения могут весить много)
       max-file-size: 10MB
+  mandatory-file-encoding: UTF-8
+# Project encoding settings
+server:
+  servlet:
+    encoding:
+      charset: UTF-8
+      enabled: true

@@ -17,12 +17,18 @@ public class AccidentMem implements AccidentRepository {
     private final Map<Integer, Accident> accidents = new ConcurrentHashMap<>();
 
     /**
+     * Инициализацию данных выносим в конструктор
+     */
+    public AccidentMem() {
+        initData();
+    }
+
+    /**
      * Найти все инциденты.
      * @return список инцидентов.
      */
     @Override
     public List<Accident> findAll() {
-        initData();
         return accidents.values()
                 .stream()
                 .toList();

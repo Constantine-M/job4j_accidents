@@ -1,5 +1,6 @@
 package ru.job4j.accidents.repository.accident;
 
+import ru.job4j.accidents.exception.RepositoryException;
 import ru.job4j.accidents.model.Accident;
 
 import java.util.List;
@@ -18,5 +19,5 @@ public interface AccidentRepository {
 
     void deleteById(int id);
 
-    void updateAccident(Accident accident);
+    void updateAccident(Accident accident) throws RepositoryException;
 }

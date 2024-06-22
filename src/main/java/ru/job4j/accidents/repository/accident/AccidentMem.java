@@ -1,8 +1,11 @@
 package ru.job4j.accidents.repository.accident;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
+import ru.job4j.accidents.exception.RepositoryException;
 import ru.job4j.accidents.model.Accident;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -11,6 +14,7 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * @author Constantine on 19.06.2024
  */
+@Slf4j
 @Repository
 public class AccidentMem implements AccidentRepository {
 
@@ -71,8 +75,14 @@ public class AccidentMem implements AccidentRepository {
      * Обновить инцидент.
      */
     @Override
-    public void updateAccident(Accident accident) {
-        accidents.put(accident.getId(), accident);
+    public void updateAccident(Accident accident) throws RepositoryException {
+        try {
+            accidents.put(accident.getId(), accident);
+        } catch (Exception e) {
+            log.error("Failed to update accident. Repository exception!", e);
+            log.error(Arrays.toString(e.getStackTrace()));
+            throw new RepositoryException("Failed to update accident! Repository exception!", e);
+        }
     }
 
     /**

@@ -4,6 +4,12 @@ import lombok.*;
 import lombok.EqualsAndHashCode.Include;
 
 /**
+ * Данная модель описывает
+ * типы инцидентов.
+ *
+ * Например, инцидент, в котором
+ * оказались водитель и велосипедист.
+ *
  * @author Constantine on 22.06.2024
  */
 @Getter

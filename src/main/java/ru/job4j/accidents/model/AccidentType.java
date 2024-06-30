@@ -4,23 +4,17 @@ import lombok.*;
 import lombok.EqualsAndHashCode.Include;
 
 /**
- * @author Constantine on 19.06.2024
+ * @author Constantine on 22.06.2024
  */
 @Getter
 @Setter
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
-public class Accident {
+public class AccidentType {
 
     @Include
     private int id;
 
     private String name;
-
-    private String text;
-
-    private String address;
-
-    private AccidentType type;
 }

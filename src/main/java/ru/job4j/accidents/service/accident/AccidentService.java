@@ -1,5 +1,6 @@
 package ru.job4j.accidents.service.accident;
 
+import ru.job4j.accidents.exception.ServiceException;
 import ru.job4j.accidents.model.Accident;
 
 import java.util.List;
@@ -18,5 +19,5 @@ public interface AccidentService {
 
     void deleteById(int id);
 
-    void update(Accident accident);
+    boolean update(Accident accident) throws ServiceException;
 }

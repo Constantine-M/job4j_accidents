@@ -57,6 +57,12 @@
                             <div class="form-group">
                                 <label for="name">Name</label>
                                 <input type="text" class="form-control mb-3" name="name" id="name">
+                                <label for="accidentType">Choose accident type</label>
+                                <select class="form-control mb-3" id="accidentType" name="type.id">
+                                    <option th:each="type : ${types}" th:value="${type.id}"
+                                            th:text="${type.name}">
+                                    </option>
+                                </select>
                                 <label for="text">Description</label>
                                 <textarea class="form-control mb-3" rows="3" type="text" name="text" id="text"></textarea>
                                 <label for="address">Address</label>

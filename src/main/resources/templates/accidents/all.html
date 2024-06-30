@@ -51,6 +51,7 @@
                 <tr>
                     <th scope="col">ID</th>
                     <th scope="col">Name</th>
+                    <th scope="col">Type</th>
                     <th scope="col">Description</th>
                     <th scope="col">Address</th>
                 </tr>
@@ -73,6 +74,7 @@
                                 поймать id-->
                         <a th:text="${accident.name}" th:href="@{|/updateAccident?id=${accident.id}|}"></a>
                     </td>
+                    <td th:text="${accident.type.name}"></td>
                     <td th:text="${accident.text}"></td>
                     <td th:text="${accident.address}"></td>
                 </tr>

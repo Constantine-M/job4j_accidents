@@ -63,6 +63,10 @@
                                             th:text="${type.name}">
                                     </option>
                                 </select>
+                                <label for="rules">Choose rules</label>
+                                <select class="form-control mb-3" multiple aria-label="" id="rules" name="rids">
+                                    <option th:each="rule : ${rules}" th:value="${rule.id}" th:text="${rule.name}" th:selected="${rule.id}"></option>
+                                </select>
                                 <label for="text">Description</label>
                                 <textarea class="form-control mb-3" rows="3" type="text" name="text" id="text"></textarea>
                                 <label for="address">Address</label>

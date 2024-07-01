@@ -4,10 +4,12 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Repository;
 import ru.job4j.accidents.model.Accident;
 import ru.job4j.accidents.model.AccidentType;
+import ru.job4j.accidents.model.Rule;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.BiFunction;
 
@@ -86,7 +88,8 @@ public class AccidentMem implements AccidentRepository {
                 accident.getName(),
                 accident.getText(),
                 accident.getAddress(),
-                accident.getType()
+                accident.getType(),
+                accident.getRules()
                 )
         ) != null;
     }
@@ -99,18 +102,23 @@ public class AccidentMem implements AccidentRepository {
     private void initData() {
         accidents.putIfAbsent(1, new Accident(1,
                 "Accident name 1", "Accident text 1", "Accident address 1",
-                new AccidentType(1, "Two cars")));
+                new AccidentType(1, "Two cars"),
+                Set.of(new Rule(1, "Article 1"))));
         accidents.putIfAbsent(2, new Accident(2,
                 "Accident name 2", "Accident text 2", "Accident address 2",
-                new AccidentType(1, "Two cars")));
+                new AccidentType(1, "Two cars"),
+                Set.of(new Rule(2, "Article 2"))));
         accidents.putIfAbsent(3, new Accident(3,
                 "Accident name 3", "Accident text 3", "Accident address 3",
-                new AccidentType(1, "Two cars")));
+                new AccidentType(1, "Two cars"),
+                Set.of(new Rule(3, "Article 3"))));
         accidents.putIfAbsent(4, new Accident(4,
                 "Accident name 4", "Accident text 4", "Accident address 4",
-                new AccidentType(1, "Two cars")));
+                new AccidentType(1, "Two cars"),
+                Set.of(new Rule(4, "Article 4"))));
         accidents.putIfAbsent(5, new Accident(5,
                 "Accident name 5", "Accident text 5", "Accident address 5",
-                new AccidentType(1, "Two cars")));
+                new AccidentType(1, "Two cars"),
+                Set.of(new Rule(5, "Article 5"))));
     }
 }

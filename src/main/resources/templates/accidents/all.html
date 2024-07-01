@@ -52,6 +52,7 @@
                     <th scope="col">ID</th>
                     <th scope="col">Name</th>
                     <th scope="col">Type</th>
+                    <th scope="col">Rules</th>
                     <th scope="col">Description</th>
                     <th scope="col">Address</th>
                 </tr>
@@ -75,6 +76,11 @@
                         <a th:text="${accident.name}" th:href="@{|/updateAccident?id=${accident.id}|}"></a>
                     </td>
                     <td th:text="${accident.type.name}"></td>
+                    <td>
+                        <div th:each="rule : ${accident.rules}">
+                            <span th:text="${rule.name}"></span><br>
+                        </div>
+                    </td>
                     <td th:text="${accident.text}"></td>
                     <td th:text="${accident.address}"></td>
                 </tr>

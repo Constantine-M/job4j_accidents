@@ -14,8 +14,10 @@ import ru.job4j.accidents.model.Accident;
 import ru.job4j.accidents.model.AccidentType;
 import ru.job4j.accidents.service.accident.AccidentService;
 import ru.job4j.accidents.service.accidenttype.AccidentTypeService;
+import ru.job4j.accidents.service.rule.RuleService;
 import ru.job4j.accidents.util.ExceptionUtil;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -32,6 +34,8 @@ public class AccidentController {
 
     private final AccidentTypeService accidentTypeService;
 
+    private final RuleService ruleService;
+
     @GetMapping
     public String findAllAccidents(Model model) {
         model.addAttribute("accidents", accidentService.findAll());
@@ -45,11 +49,26 @@ public class AccidentController {
         types.add(new AccidentType(2, "Car and person"));
         types.add(new AccidentType(3, "Car and cyclist"));
         model.addAttribute("types", types);
+        model.addAttribute("rules", ruleService.findAll());
         return "/accidents/createAccident";
     }
 
+    /**
+     * Сохранить инцидент.
+     *
+     * 1.Берем из запроса список ID статей,
+     * которые связаны с инцидентом.
+     * 2.Находим связанные статьи и сетим
+     * в {@link Accident}.
+     *
+     * @param accident инцидент.
+     * @param request запрос.
+     */
     @PostMapping("/saveAccident")
-    public String saveAccident(@ModelAttribute Accident accident) {
+    public String saveAccident(@ModelAttribute Accident accident,
+                               HttpServletRequest request) {
+        String[] ids = request.getParameterValues("rids");
+        accident.setRules(ruleService.findAllByIds(ids));
         accidentService.save(accident);
         return "redirect:/";
     }
@@ -70,13 +89,17 @@ public class AccidentController {
         }
         model.addAttribute("accident", optionalAccident.get());
         model.addAttribute("types", accidentTypeService.findAll());
+        model.addAttribute("rules", ruleService.findAll());
         return "/accidents/update";
     }
 
     @PostMapping("/updateAccident")
     public String updateAccident(@ModelAttribute Accident accident,
-                                 Model model) throws ServiceException, ControllerException {
+                                 Model model,
+                                 HttpServletRequest request) throws ServiceException, ControllerException {
         try {
+            String[] ids = request.getParameterValues("rids");
+            accident.setRules(ruleService.findAllByIds(ids));
             accidentService.update(accident);
         } catch (Exception e) {
             if (ExceptionUtil.getRootCause(e) instanceof ServiceException) {

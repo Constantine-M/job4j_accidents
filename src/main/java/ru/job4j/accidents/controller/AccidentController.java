@@ -44,11 +44,7 @@ public class AccidentController {
 
     @GetMapping("/saveAccident")
     public String getCreationPage(Model model) {
-        List<AccidentType> types = new ArrayList<>();
-        types.add(new AccidentType(1, "Two cars"));
-        types.add(new AccidentType(2, "Car and person"));
-        types.add(new AccidentType(3, "Car and cyclist"));
-        model.addAttribute("types", types);
+        model.addAttribute("types", accidentTypeService.findAll());
         model.addAttribute("rules", ruleService.findAll());
         return "/accidents/createAccident";
     }
@@ -82,12 +78,7 @@ public class AccidentController {
     @GetMapping("/updateAccident")
     public String getEditAccidentPage(Model model,
                            @RequestParam("id") int id) {
-        var optionalAccident = accidentService.findById(id);
-        if (optionalAccident.isEmpty()) {
-            model.addAttribute("error", "Accident not found");
-            return "/errors/404";
-        }
-        model.addAttribute("accident", optionalAccident.get());
+        model.addAttribute("accident", accidentService.findById(id).get());
         model.addAttribute("types", accidentTypeService.findAll());
         model.addAttribute("rules", ruleService.findAll());
         return "/accidents/update";

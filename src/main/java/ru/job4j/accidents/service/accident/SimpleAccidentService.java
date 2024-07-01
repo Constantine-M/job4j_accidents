@@ -48,11 +48,7 @@ public class SimpleAccidentService implements AccidentService {
     @Override
     public boolean update(Accident accident) throws ServiceException {
         var optionalAccidentType = accidentTypeRepository.findById(accident.getType().getId());
-        if (optionalAccidentType.isPresent()) {
-            accident.setType(optionalAccidentType.get());
-        } else {
-            throw new ServiceException("Can't find accident type! Accident has not been updated!");
-        }
+        optionalAccidentType.ifPresent(accident::setType);
         return accidentRepository.updateAccident(accident);
     }
 }

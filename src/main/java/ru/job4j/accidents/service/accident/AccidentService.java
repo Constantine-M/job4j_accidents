@@ -1,6 +1,5 @@
 package ru.job4j.accidents.service.accident;
 
-import ru.job4j.accidents.exception.ServiceException;
 import ru.job4j.accidents.model.Accident;
 
 import java.util.List;
@@ -15,9 +14,9 @@ public interface AccidentService {
 
     Optional<Accident> findById(int id);
 
-    Accident save(Accident accident);
+    Accident save(Accident accident, String[] ruleIds);
 
     void deleteById(int id);
 
-    boolean update(Accident accident) throws ServiceException;
+    boolean update(Accident accident, String[] ruleIds);
 }

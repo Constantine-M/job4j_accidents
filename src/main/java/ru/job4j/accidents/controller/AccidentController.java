@@ -11,16 +11,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import ru.job4j.accidents.exception.ControllerException;
 import ru.job4j.accidents.exception.ServiceException;
 import ru.job4j.accidents.model.Accident;
-import ru.job4j.accidents.model.AccidentType;
 import ru.job4j.accidents.service.accident.AccidentService;
 import ru.job4j.accidents.service.accidenttype.AccidentTypeService;
 import ru.job4j.accidents.service.rule.RuleService;
-import ru.job4j.accidents.util.ExceptionUtil;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * @author Constantine on 20.06.2024
@@ -54,8 +49,8 @@ public class AccidentController {
      *
      * 1.Берем из запроса список ID статей,
      * которые связаны с инцидентом.
-     * 2.Находим связанные статьи и сетим
-     * в {@link Accident}.
+     * 2.Полученную информацию с фронта
+     * передаем в слой сервисов.
      *
      * @param accident инцидент.
      * @param request запрос.
@@ -63,9 +58,8 @@ public class AccidentController {
     @PostMapping("/saveAccident")
     public String saveAccident(@ModelAttribute Accident accident,
                                HttpServletRequest request) {
-        String[] ids = request.getParameterValues("rids");
-        accident.setRules(ruleService.findAllByIds(ids));
-        accidentService.save(accident);
+        String[] accidentRuleIds = request.getParameterValues("rids");
+        accidentService.save(accident, accidentRuleIds);
         return "redirect:/";
     }
 
@@ -93,9 +87,8 @@ public class AccidentController {
     @PostMapping("/updateAccident")
     public String updateAccident(@ModelAttribute Accident accident,
                                  HttpServletRequest request) throws ServiceException, ControllerException {
-        String[] ids = request.getParameterValues("rids");
-        accident.setRules(ruleService.findAllByIds(ids));
-        accidentService.update(accident);
+        String[] accidentRuleIds = request.getParameterValues("rids");
+        accidentService.update(accident, accidentRuleIds);
         return "redirect:/";
     }
 }

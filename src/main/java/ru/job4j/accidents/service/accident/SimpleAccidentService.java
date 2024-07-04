@@ -3,10 +3,10 @@ package ru.job4j.accidents.service.accident;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-import ru.job4j.accidents.exception.ServiceException;
 import ru.job4j.accidents.model.Accident;
 import ru.job4j.accidents.repository.accident.AccidentRepository;
 import ru.job4j.accidents.repository.accidenttype.AccidentTypeRepository;
+import ru.job4j.accidents.repository.rule.RuleRepository;
 
 import java.util.List;
 import java.util.Optional;
@@ -23,6 +23,8 @@ public class SimpleAccidentService implements AccidentService {
 
     private final AccidentTypeRepository accidentTypeRepository;
 
+    private final RuleRepository ruleRepository;
+
     @Override
     public List<Accident> findAll() {
         return accidentRepository.findAll();
@@ -33,10 +35,21 @@ public class SimpleAccidentService implements AccidentService {
         return accidentRepository.findById(id);
     }
 
+    /**
+     * Сохранить инцидент.
+     *
+     * Находим статьи, находим тип инцидента.
+     * Все сетим в инцидент и сохраняем его.
+     *
+     * @param accident инцидент.
+     * @param ruleIds список идентификаторов статей, которые
+     *                связаны с инцидентом.
+     */
     @Override
-    public Accident save(Accident accident) {
+    public Accident save(Accident accident, String[] ruleIds) {
         var optionalAccidentType = accidentTypeRepository.findById(accident.getType().getId());
-        accident.setType(optionalAccidentType.get());
+        accident.setRules(ruleRepository.findAllByIds(ruleIds));
+        optionalAccidentType.ifPresent(accident::setType);
         return accidentRepository.save(accident);
     }
 
@@ -45,9 +58,21 @@ public class SimpleAccidentService implements AccidentService {
         accidentRepository.deleteById(id);
     }
 
+    /**
+     * Обновить инцидент.
+     *
+     * Находим статьи, находим тип инцидента -
+     * оно будет либо старым, либо новым.
+     * Все сетим в инцидент и обновляем его.
+     *
+     * @param accident инцидент.
+     * @param ruleIds список идентификаторов статей, которые
+     *                связаны с инцидентом.
+     */
     @Override
-    public boolean update(Accident accident) throws ServiceException {
+    public boolean update(Accident accident, String[] ruleIds) {
         var optionalAccidentType = accidentTypeRepository.findById(accident.getType().getId());
+        accident.setRules(ruleRepository.findAllByIds(ruleIds));
         optionalAccidentType.ifPresent(accident::setType);
         return accidentRepository.updateAccident(accident);
     }

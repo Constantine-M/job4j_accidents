@@ -78,6 +78,12 @@ public class AccidentController {
     @GetMapping("/updateAccident")
     public String getEditAccidentPage(Model model,
                            @RequestParam("id") int id) {
+        var optionalAccident = accidentService.findById(id);
+        if (optionalAccident.isEmpty()) {
+            model.addAttribute("error", "Accident not found!");
+            return "/errors/404";
+        }
+        model.addAttribute("accident", optionalAccident.get());
         model.addAttribute("accident", accidentService.findById(id).get());
         model.addAttribute("types", accidentTypeService.findAll());
         model.addAttribute("rules", ruleService.findAll());
@@ -86,21 +92,10 @@ public class AccidentController {
 
     @PostMapping("/updateAccident")
     public String updateAccident(@ModelAttribute Accident accident,
-                                 Model model,
                                  HttpServletRequest request) throws ServiceException, ControllerException {
-        try {
-            String[] ids = request.getParameterValues("rids");
-            accident.setRules(ruleService.findAllByIds(ids));
-            accidentService.update(accident);
-        } catch (Exception e) {
-            if (ExceptionUtil.getRootCause(e) instanceof ServiceException) {
-                log.error("Can't update the accident! Error logged!", e);
-                log.error(Arrays.toString(e.getStackTrace()));
-                model.addAttribute("error", "Can't update the accident!");
-                return "errors/404";
-            }
-            throw new ControllerException("Can't update the accident!", e);
-        }
+        String[] ids = request.getParameterValues("rids");
+        accident.setRules(ruleService.findAllByIds(ids));
+        accidentService.update(accident);
         return "redirect:/";
     }
 }

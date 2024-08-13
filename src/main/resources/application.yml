@@ -10,6 +10,7 @@ spring:
     url: jdbc:postgresql://localhost:5432/accidents
     username: postgres
     password: Okhorzina2912
+    driver-class-name: org.postgresql.Driver
   servlet:
     multipart:
       # Указываем максимальный размер файла (по умолчанию 1MB, что неудобно, т.к. некоторые изображения могут весить много)

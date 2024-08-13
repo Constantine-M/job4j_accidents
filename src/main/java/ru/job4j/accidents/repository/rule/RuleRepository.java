@@ -1,5 +1,6 @@
 package ru.job4j.accidents.repository.rule;
 
+import ru.job4j.accidents.model.Accident;
 import ru.job4j.accidents.model.Rule;
 
 import java.util.List;
@@ -14,6 +15,8 @@ public interface RuleRepository {
     List<Rule> findAll();
 
     Set<Rule> findAllByIds(String[] ids);
+
+    Set<Rule> findAllByAccident(Accident accident);
 
     Optional<Rule> findById(int id);
 }

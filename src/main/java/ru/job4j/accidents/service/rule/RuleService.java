@@ -1,5 +1,6 @@
 package ru.job4j.accidents.service.rule;
 
+import ru.job4j.accidents.model.Accident;
 import ru.job4j.accidents.model.Rule;
 
 import java.util.List;
@@ -16,4 +17,6 @@ public interface RuleService {
     Set<Rule> findAllByIds(String[] ids);
 
     Optional<Rule> findById(int id);
+
+    Set<Rule> findAllByAccident(Accident accident);
 }

@@ -1,7 +1,9 @@
 package ru.job4j.accidents.service.rule;
 
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import ru.job4j.accidents.model.Accident;
 import ru.job4j.accidents.model.Rule;
 import ru.job4j.accidents.repository.rule.RuleRepository;
 
@@ -16,6 +18,7 @@ import java.util.Set;
 @Service
 public class SimpleRuleService implements RuleService {
 
+    @Qualifier("rulesJdbcTemplate")
     private final RuleRepository ruleRepository;
 
     @Override
@@ -31,5 +34,10 @@ public class SimpleRuleService implements RuleService {
     @Override
     public Optional<Rule> findById(int id) {
         return ruleRepository.findById(id);
+    }
+
+    @Override
+    public Set<Rule> findAllByAccident(Accident accident) {
+        return ruleRepository.findAllByAccident(accident);
     }
 }

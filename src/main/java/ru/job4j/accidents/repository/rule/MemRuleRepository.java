@@ -1,6 +1,7 @@
 package ru.job4j.accidents.repository.rule;
 
 import org.springframework.stereotype.Repository;
+import ru.job4j.accidents.model.Accident;
 import ru.job4j.accidents.model.Rule;
 
 import java.util.*;
@@ -63,5 +64,10 @@ public class MemRuleRepository implements RuleRepository {
         rules.add(new Rule(3, "Article 3"));
         rules.add(new Rule(4, "Article 4"));
         rules.add(new Rule(5, "Article 5"));
+    }
+
+    @Override
+    public Set<Rule> findAllByAccident(Accident accident) {
+        return accident.getRules();
     }
 }

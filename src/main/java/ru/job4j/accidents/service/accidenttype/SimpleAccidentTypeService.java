@@ -1,6 +1,7 @@
 package ru.job4j.accidents.service.accidenttype;
 
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import ru.job4j.accidents.model.AccidentType;
 import ru.job4j.accidents.repository.accidenttype.AccidentTypeRepository;
@@ -15,6 +16,7 @@ import java.util.Optional;
 @Service
 public class SimpleAccidentTypeService implements AccidentTypeService {
 
+    @Qualifier("accidentTypeJdbcTemplate")
     private final AccidentTypeRepository accidentTypeRepository;
 
     @Override

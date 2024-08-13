@@ -37,7 +37,7 @@
         }
     </style>
 
-    <title>All accidents</title>
+    <title>Detail info</title>
 </head>
 <link rel="shortcut icon" th:href="@{/images/accident-logo.png}"/>
 <body>
@@ -46,46 +46,40 @@
 <div class="mt-5 container">
     <div class="mt-5 mb-5 row justify-content-around">
         <div class="col-10">
-            <table class="table caption-top">
-                <thead>
-                <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Type</th>
-                    <th scope="col">Rules</th>
-                    <th scope="col">Description</th>
-                    <th scope="col">Address</th>
-                </tr>
-                </thead>
-                <tbody>
-                <!--    Если список accidents пуст, выводится строка таблицы с сообщением об отсутствии совпадений-->
-                <tr th:if="${accidents.size() == 0}">
-                    <td colspan="2" class="text-center">
-                        <div class="alert alert-warning" role="alert">
-                            No accidents found. Sorry :(
-                        </div>
-                    </td>
-                </tr>
-                <tr class="mb-5" th:each="accident : ${accidents}">
-                    <td th:text="${accident.id}"></td>
-                    <td>
-                        <!--    Ниже пример, как можно передать id в запросе.
-                                Прописывать точь-в-точь. Каждая палка важна!
-                                В контроллере будем использовать RequestParam, чтобы
-                                поймать id-->
-                        <a th:text="${accident.name}" th:href="@{/detail/{id}(id=${accident.getId()})}"></a>
-                    </td>
-                    <td th:text="${accident.type.name}"></td>
-                    <td>
-                        <div th:each="rule : ${accident.rules}">
-                            <span th:text="${rule.name}"></span><br>
-                        </div>
-                    </td>
-                    <td th:text="${accident.text}"></td>
-                    <td th:text="${accident.address}"></td>
-                </tr>
-                </tbody>
-            </table>
+            <div class="row pt-3">
+                <div class="card" style="width: 100%">
+                    <div class="card-header">
+                        Detail info
+                    </div>
+                    <div class="card-body">
+                        <form th:action="@{/detail}" th:object="${accident}" method="GET" enctype="multipart/form-data">
+                            <input type="hidden" name="id" th:field="*{id}"/>
+                            <div class="form-group">
+                                <label for="name">Name</label>
+                                <input type="text" class="form-control mb-3" name="name" id="name" th:field="${accident.name}" disabled>
+                                <label for="accidentType">Accident type</label>
+                                <input type="text" class="form-control mb-3" id="accidentType" name="name" th:field="${accident.type.name}" disabled>
+                                <label for="rules">Related rules</label>
+                                <select class="form-control mb-3" multiple aria-label="" id="rules" name="">
+                                    <option th:each="rule : ${accident.rules}" th:text="${rule.name}"></option>
+                                </select>
+                                <label for="text">Description</label>
+                                <textarea class="form-control mb-3" rows="3" type="text" name="text" id="text" th:field="${accident.text}" disabled></textarea>
+                                <label for="address">Address</label>
+                                <input type="text" class="form-control mb-3 disabled" name="address" id="address" th:field="${accident.address}" disabled>
+                            </div>
+                            <div class="row">
+                                <!--    Кнопка ниже возвращает пользователя на предыдущую страницу. Очень удобно - недавно отыскал  -->
+                                <div class=" row col-6">
+                                    <div class="col-6"><a class="btn btn-outline-warning w-75" onclick="history.back()"> < Back</a></div>
+                                    <div class="col-6"><a class="btn btn-outline-success w-75" th:href="@{|/updateAccident?id=${accident.id}|}">Edit ></a></div>
+                                </div>
+                                <div class="col-6"></div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

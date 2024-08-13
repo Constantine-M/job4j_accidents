@@ -1,0 +1,5 @@
+CREATE TABLE IF NOT EXISTS rules
+(
+    id SERIAL PRIMARY KEY,
+    acc_rule_name VARCHAR NOT NULL
+);

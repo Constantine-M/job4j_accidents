@@ -4,10 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import ru.job4j.accidents.exception.ControllerException;
 import ru.job4j.accidents.exception.ServiceException;
 import ru.job4j.accidents.model.Accident;
@@ -63,6 +60,19 @@ public class AccidentController {
         return "redirect:/";
     }
 
+    @GetMapping("/detail/{id}")
+    public String getDetailInfo(Model model,
+                                @PathVariable int id) {
+        var optionalAccident = accidentService.findById(id);
+        if (optionalAccident.isEmpty()) {
+            model.addAttribute("error", "Accident not found!");
+            return "/errors/404";
+        }
+        model.addAttribute("accident", optionalAccident.get());
+        model.addAttribute("rules", ruleService.findAllByAccident(optionalAccident.get()));
+        return "accidents/detail";
+    }
+
     /**
      * Обновить инцидент по ID.
      *
@@ -78,7 +88,6 @@ public class AccidentController {
             return "/errors/404";
         }
         model.addAttribute("accident", optionalAccident.get());
-        model.addAttribute("accident", accidentService.findById(id).get());
         model.addAttribute("types", accidentTypeService.findAll());
         model.addAttribute("rules", ruleService.findAll());
         return "/accidents/update";
